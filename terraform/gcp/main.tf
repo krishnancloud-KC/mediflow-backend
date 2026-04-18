@@ -42,3 +42,47 @@ resource "google_project_service" "apis" {
   service            = each.key
   disable_on_destroy = false
 }
+# ── BigQuery Datasets ──────────────────────────────────────────
+
+resource "google_bigquery_dataset" "raw" {
+  dataset_id                  = "mediflow_raw"
+  location                    = "asia-south1"
+  project                     = var.project_id
+  labels = { env = "dev" }
+}
+
+resource "google_bigquery_dataset" "clean" {
+  dataset_id                  = "mediflow_clean"
+  location                    = "asia-south1"
+  project                     = var.project_id
+  
+  labels = { env = "dev" }
+}
+
+resource "google_bigquery_dataset" "mart" {
+  dataset_id                  = "mediflow_mart"
+  location                    = "asia-south1"
+  project                     = var.project_id
+  
+  labels = { env = "dev" }
+}
+# ── raw_claims Table ───────────────────────────────────────────
+
+resource "google_bigquery_table" "raw_claims" {
+  dataset_id          = google_bigquery_dataset.raw.dataset_id
+  table_id            = "raw_claims"
+  project             = var.project_id
+  deletion_protection = false
+
+  schema = jsonencode([
+    { name = "claim_id",       type = "STRING",    mode = "REQUIRED" },
+    { name = "patient_id",     type = "STRING",    mode = "REQUIRED" },
+    { name = "doctor",         type = "STRING",    mode = "NULLABLE" },
+    { name = "diagnosis_code", type = "STRING",    mode = "NULLABLE" },
+    { name = "amount",         type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "status",         type = "STRING",    mode = "NULLABLE" },
+    { name = "created_at",     type = "TIMESTAMP", mode = "NULLABLE" }
+  ])
+
+  labels = { env = "dev" }
+}
