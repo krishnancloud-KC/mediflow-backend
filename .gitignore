@@ -1,0 +1,8 @@
+*.tfstate
+*.tfstate.backup
+.terraform/
+credentials.json
+*.zip
+venv/
+__pycache__/
+*.pyc
