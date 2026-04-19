@@ -28,7 +28,7 @@ def generate_claim():
         "created_at": datetime.utcnow().isoformat()
     }
 def publish_to_pubsub(claim):
-print(f"[SKIPPED] PubSub: {claim['claim_id']}")
+    print(f"[SKIPPED] PubSub: {claim['claim_id']}")
 def insert_to_bigquery(claim):
     client = bigquery.Client(project=PROJECT_ID)
     table_ref = f"{PROJECT_ID}.{DATASET}.{TABLE}"
