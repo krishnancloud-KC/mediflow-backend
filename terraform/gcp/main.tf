@@ -86,3 +86,11 @@ resource "google_bigquery_table" "raw_claims" {
 
   labels = { env = "dev" }
 }
+# ── Pub/Sub Topic ──────────────────────────────────────────────
+
+resource "google_pubsub_topic" "claims_stream" {
+  name    = "claims-stream"
+  project = var.project_id
+
+  labels = { env = "dev" }
+}
