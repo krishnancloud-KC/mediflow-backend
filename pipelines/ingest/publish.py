@@ -2,7 +2,8 @@ import json
 import random
 import uuid
 from datetime import datetime
-from google.cloud import pubsub_v1
+#from google.cloud import pubsub_v1
+
 from google.cloud import bigquery
 
 # Config
@@ -26,14 +27,8 @@ def generate_claim():
         "status": random.choice(STATUSES),
         "created_at": datetime.utcnow().isoformat()
     }
-
 def publish_to_pubsub(claim):
-    publisher = pubsub_v1.PublisherClient()
-    topic_path = publisher.topic_path(PROJECT_ID, TOPIC_ID)
-    data = json.dumps(claim).encode("utf-8")
-    future = publisher.publish(topic_path, data)
-    print(f"Published to PubSub: {future.result()}")
-
+print(f"[SKIPPED] PubSub: {claim['claim_id']}")
 def insert_to_bigquery(claim):
     client = bigquery.Client(project=PROJECT_ID)
     table_ref = f"{PROJECT_ID}.{DATASET}.{TABLE}"
