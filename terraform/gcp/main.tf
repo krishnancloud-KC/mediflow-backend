@@ -336,3 +336,22 @@ resource "google_bigquery_table" "claims_mart" {
     { name = "updated_at",     type = "TIMESTAMP", mode = "NULLABLE" }
   ])
 }
+# Day 7 — fraud_alerts table
+resource "google_bigquery_table" "fraud_alerts" {
+  dataset_id = "mediflow_mart"
+  table_id   = "fraud_alerts"
+  project    = var.project_id
+
+  schema = jsonencode([
+    { name = "claim_id",       type = "STRING",    mode = "REQUIRED" },
+    { name = "patient_id",     type = "STRING",    mode = "NULLABLE" },
+    { name = "doctor",         type = "STRING",    mode = "NULLABLE" },
+    { name = "diagnosis_code", type = "STRING",    mode = "NULLABLE" },
+    { name = "amount",         type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "status",         type = "STRING",    mode = "NULLABLE" },
+    { name = "created_at",     type = "TIMESTAMP", mode = "NULLABLE" },
+    { name = "risk_level",     type = "STRING",    mode = "NULLABLE" },
+    { name = "reason",         type = "STRING",    mode = "NULLABLE" },
+    { name = "flagged_at",     type = "TIMESTAMP", mode = "NULLABLE" }
+  ])
+}
