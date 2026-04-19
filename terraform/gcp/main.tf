@@ -297,3 +297,42 @@ output "appointment_reminders_topic" {
   description = "Pub/Sub topic name"
   value       = google_pubsub_topic.appointment_reminders.name
 }
+# Day 6 — clean_claims table
+resource "google_bigquery_table" "clean_claims" {
+  dataset_id = "mediflow_clean"
+  table_id   = "clean_claims"
+  project    = var.project_id
+
+  schema = jsonencode([
+    { name = "claim_id",       type = "STRING",    mode = "REQUIRED" },
+    { name = "patient_id",     type = "STRING",    mode = "REQUIRED" },
+    { name = "doctor",         type = "STRING",    mode = "REQUIRED" },
+    { name = "diagnosis_code", type = "STRING",    mode = "REQUIRED" },
+    { name = "amount",         type = "FLOAT64",   mode = "REQUIRED" },
+    { name = "status",         type = "STRING",    mode = "REQUIRED" },
+    { name = "created_at",     type = "TIMESTAMP", mode = "NULLABLE" },
+    { name = "processed_at",   type = "TIMESTAMP", mode = "NULLABLE" }
+  ])
+}
+
+# Day 6 — claims_mart table
+resource "google_bigquery_table" "claims_mart" {
+  dataset_id = "mediflow_mart"
+  table_id   = "claims_mart"
+  project    = var.project_id
+
+  schema = jsonencode([
+    { name = "claim_date",     type = "DATE",      mode = "NULLABLE" },
+    { name = "doctor",         type = "STRING",    mode = "NULLABLE" },
+    { name = "diagnosis_code", type = "STRING",    mode = "NULLABLE" },
+    { name = "total_claims",   type = "INT64",     mode = "NULLABLE" },
+    { name = "total_amount",   type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "avg_amount",     type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "max_amount",     type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "min_amount",     type = "FLOAT64",   mode = "NULLABLE" },
+    { name = "approved_count", type = "INT64",     mode = "NULLABLE" },
+    { name = "rejected_count", type = "INT64",     mode = "NULLABLE" },
+    { name = "pending_count",  type = "INT64",     mode = "NULLABLE" },
+    { name = "updated_at",     type = "TIMESTAMP", mode = "NULLABLE" }
+  ])
+}
