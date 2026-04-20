@@ -73,6 +73,10 @@ resource "google_bigquery_table" "raw_claims" {
   table_id            = "raw_claims"
   project             = var.project_id
   deletion_protection = false
+  time_partitioning {
+    type  = "DAY"
+    field = "created_at"
+  }
 
   schema = jsonencode([
     { name = "claim_id", type = "STRING", mode = "REQUIRED" },
@@ -341,7 +345,10 @@ resource "google_bigquery_table" "fraud_alerts" {
   dataset_id = "mediflow_mart"
   table_id   = "fraud_alerts"
   project    = var.project_id
+  deletion_protection = false
 
+  clustering = ["risk_level"]
+  
   schema = jsonencode([
     { name = "claim_id",       type = "STRING",    mode = "REQUIRED" },
     { name = "patient_id",     type = "STRING",    mode = "NULLABLE" },
