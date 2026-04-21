@@ -6,3 +6,5 @@ credentials.json
 venv/
 __pycache__/
 *.pyc
+gcp-key-base64.txt
+mediflow-cicd-key.json
