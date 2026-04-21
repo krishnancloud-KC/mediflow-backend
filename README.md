@@ -10,6 +10,7 @@
 MediFlow is a multi-cloud Healthcare Claims Data Engineering platform built on GCP + AWS using Terraform IaC. It ingests, processes, and analyzes healthcare claims data with fraud detection — all within free tier limits.
 
 ## Architecture# mediflow-backend
+![MediFlow Architecture](docs/architecture.png)
 Cloud Scheduler (every 5 min)
 ↓
 Cloud Function Gen2 (appointment-checker)
